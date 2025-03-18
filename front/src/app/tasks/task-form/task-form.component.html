@@ -22,10 +22,24 @@
         </div>
         <div class="mb-3">
           <label for="state" class="form-label">Estado</label>
-          <input type="number" id="state" class="form-control" [(ngModel)]="task.state" name="state" #state="ngModel"
-            required />
-          <div class="text-danger" *ngIf="state.invalid && state.touched">El estado es obligatorio.</div>
-        </div>
+          <select
+            id="state"
+            class="form-select"
+            [(ngModel)]="task.state"
+            name="state"
+            #state="ngModel"
+            required
+          >
+            <option value="">Selecciona un estado</option>
+        
+            <option [value]="1">Pendiente</option>
+            <option [value]="2">Completada</option>
+          </select>
+        
+          <div class="text-danger" *ngIf="state.invalid && state.touched">
+            El estado es obligatorio.
+          </div>
+        </div>              
         <div class="d-flex justify-content-end">
           <button type="button" class="btn btn-secondary me-2" (click)="closeModal.emit()">Cancelar</button>
           <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
