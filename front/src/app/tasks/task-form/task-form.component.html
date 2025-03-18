@@ -1,0 +1,38 @@
+<div class="modal-backdrop" (click)="closeModal.emit()"></div>
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content shadow">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ task.id ? 'Editar Tarea' : 'Agregar Tarea' }}</h5>
+    </div>
+    <div class="modal-body">
+      <form #taskForm="ngForm" (ngSubmit)="saveTask()" novalidate>
+        <div class="mb-3">
+          <label for="title" class="form-label">Título</label>
+          <input type="text" id="title" class="form-control" [(ngModel)]="task.title" name="title" #title="ngModel"
+            required />
+          <div class="text-danger" *ngIf="title.invalid && title.touched"> El título es obligatorio. </div>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Descripción</label>
+          <input type="text" id="description" class="form-control" [(ngModel)]="task.description" name="description"
+            #description="ngModel" required />
+          <div class="text-danger" *ngIf="description.invalid && description.touched">
+            <div *ngIf="description.errors?.['required']">La descripción es obligatoria.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="state" class="form-label">Estado</label>
+          <input type="number" id="state" class="form-control" [(ngModel)]="task.state" name="state" #state="ngModel"
+            required />
+          <div class="text-danger" *ngIf="state.invalid && state.touched">El estado es obligatorio.</div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="closeModal.emit()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+            {{ task.id ? 'Actualizar' : 'Guardar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

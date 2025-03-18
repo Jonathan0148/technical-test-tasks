@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <div class="card shadow" style="border: 1px solid rgba(0, 0, 0, 0.1);">
+      <div class="card-body">
+        <h1 class="text-center">Tareas</h1>
+  
+        <button class="btn btn-primary mb-4" (click)="openModal()">Agregar Tarea</button>
+  
+        <div *ngIf="tasks.length === 0; else taskTable" class="text-center mt-4">
+          <p>No hay tareas disponibles. Agrega una nueva.</p>
+        </div>
+  
+        <ng-template #taskTable>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of tasks">
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.state }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm me-2" (click)="openModal(task)">Editar</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteTask(task.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+  
+        <app-task-form *ngIf="isModalOpen" [task]="selectedTask || { title: '', description: '', state: 0 }"
+          (formSubmit)="handleFormSubmit()" (closeModal)="closeModal()">
+        </app-task-form>
+      </div>
+    </div>
+  </div>
+  
